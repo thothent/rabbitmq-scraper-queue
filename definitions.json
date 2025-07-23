@@ -1,0 +1,57 @@
+{
+  "vhosts": [{ "name": "/" }],
+  "users": [
+    {
+      "name": "admin",
+      "password": "admin",
+      "tags": "administrator"
+    }
+  ],
+  "permissions": [
+    {
+      "user": "admin",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    }
+  ],
+  "queues": [
+    {
+      "name": "scraper_job_queue",
+      "vhost": "/",
+      "durable": true,
+      "arguments": {
+        "x-max-priority": 10,
+        "x-message-ttl": 30000,
+        "x-dead-letter-exchange": "scraper_dl_exchange"
+      }
+    },
+    {
+      "name": "scraper_dl_queue",
+      "vhost": "/",
+      "durable": true,
+      "arguments": {
+        "x-dead-letter-exchange": "",
+        "x-dead-letter-routing-key": "scraper_job_queue"
+      }
+    }
+  ],
+  "exchanges": [
+    {
+      "name": "scraper_dl_exchange",
+      "vhost": "/",
+      "type": "direct",
+      "durable": true
+    }
+  ],
+  "bindings": [
+    {
+      "source": "scraper_dl_exchange",
+      "vhost": "/",
+      "destination": "scraper_dl_queue",
+      "destination_type": "queue",
+      "routing_key": ""
+    }
+  ]
+}
