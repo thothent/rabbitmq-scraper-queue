@@ -3,7 +3,7 @@ version: "3.8"
 services:
   rabbitmq-scraper-queue:
     image: rabbitmq:latest
-    container_name: rabbitmq
+    container_name: rabbitmq-scraper-queue
     restart: always
     ports:
       - "127.0.1.1:5672:5672" # AMQP
