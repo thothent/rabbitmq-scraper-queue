@@ -1,13 +1,13 @@
 version: "3.8"
 
 services:
-  rabbitmq:
+  rabbitmq-scraper-queue:
     image: rabbitmq:latest
     container_name: rabbitmq
     restart: always
     ports:
-      - "5672:5672" # AMQP
-      - "15672:15672" # Management UI
+      - "127.0.1.1:5672:5672" # AMQP
+      - "127.0.1.1:15672:15672" # Management UI
     environment:
       RABBITMQ_DEFAULT_USER: kalo
       RABBITMQ_DEFAULT_PASS: kalo
